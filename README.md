@@ -1,5 +1,3 @@
-# spring-security-jwt-auth
-
 # 🔐 Spring Security JWT Authentication (Java 19)
 
 This project demonstrates a **Spring Boot** application secured with **Spring Security**, using:
@@ -36,7 +34,24 @@ UserDetails admin = User.withUsername("admin")
     .password("{noop}admin123")
     .roles("ADMIN")
     .build();
+🗃️ DAO Authentication (DaoAuthenticationProvider)
+Fetches user credentials and roles from MySQL database
 
+Implements UserDetailsService and uses DaoAuthenticationProvider
+
+Encapsulates full Spring Security authentication flow
+
+Validates user credentials using database-stored passwords
+
+@Autowired
+private UserDetailsService userDetailsService;
+
+@Bean
+public DaoAuthenticationProvider authProvider() {
+    DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+    provider.setUserDetailsService(userDetailsService);
+    return provider;
+}
 🔑 JWT (JSON Web Token) Authentication
 Stateless authentication mechanism
 
@@ -92,7 +107,6 @@ POST /users/login → Get JWT token
 GET /users/user or /users/admin → Access with token
 
 📦 Example Login Request
-
 POST /users/login
 Content-Type: application/json
 
